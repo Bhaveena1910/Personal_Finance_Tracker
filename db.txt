@@ -1,0 +1,38 @@
+Importing the Module 
+import sqlite3 
+Creating a Connection 
+conn = sqlite3.connect('example.db') 
+Creating a Cursor 
+cur = conn.cursor() 
+Creating Tables 
+cur.execute(""" 
+    CREATE TABLE IF NOT EXISTS users ( 
+        user_id TEXT PRIMARY KEY, 
+        username TEXT 
+    ) 
+""") 
+This statement ensures that the table is only created if it doesn't already exist. 
+Inserting Records 
+cur.execute("INSERT INTO users (user_id, username) VALUES (?, ?)", (user_id, 
+username)) 
+After inserting any new records, it's important to commit the changes to the database to make 
+them permanent. 
+conn.commit()  # Save (commit) the changes 
+Fetching Data 
+To retrieve data from the database, use the SELECT statement.  
+ 
+cur.execute("SELECT * FROM users") 
+rows = cur.fetchall()  # Fetch all results 
+for row in rows: 
+    print(row)  # Output each row 
+Updating Records 
+To update existing records,  use the UPDATE SQL statement.  
+cur.execute("UPDATE users SET username = ? WHERE user_id = ?", (new_username, 
+user_id)) 
+conn.commit()  # Commit the changes after update 
+Deleting Records 
+cur.execute("DELETE FROM users WHERE user_id = ?", (user_id,)) 
+conn.commit()  # Commit the changes after deletion 
+Closing the Connection 
+cur.close()   # Close the cursor 
+conn.close()  # Close the connection
